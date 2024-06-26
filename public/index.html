@@ -20,19 +20,26 @@
   <form id="search_form" class="mt-8">
     <input id="query" type="text" class="w-full p-4 text-2xl rounded-lg border-2" placeholder="Search for anything">
   </form>
+  <div id="results" class="mt-8 p-4 border-2 rounded-lg"></div>
   <script src="/socket.io/socket.io.js"></script>
   <script>
     const socket = io();
 
     const form = document.getElementById('search_form');
     const query = document.getElementById('query');
+    const results = document.getElementById('results');
 
     form.addEventListener('submit', (e) => {
       e.preventDefault();
+      results.innerHTML = '';  // Clear previous results
       if (query.value) {
         socket.emit('query', query.value);
         query.value = '';
       }
+    });
+
+    socket.on('response', (data) => {
+      results.innerHTML += data;  // Append new data to the results div
     });
   </script>
 </body>
