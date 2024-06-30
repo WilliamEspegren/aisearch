@@ -11,7 +11,7 @@ export async function spiderSearch(query) {
 		const response = await spider.search(query, options);
 		return response;
 	} catch (error) {
-		console.log(error);
+		console.error(error);
 		return res.status(500).json({ error: "Internal server error" });
 	}
 }

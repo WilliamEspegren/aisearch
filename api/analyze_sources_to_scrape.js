@@ -7,7 +7,6 @@ const app = express();
 app.use(express.json()); // for parsing application/json
 
 app.post('/analyze', async (req, res) => {
-	console.log('Request:', req.body);
 	const { auth_token, sources, query } = req.body;
 
 	if (!sources || !query) {

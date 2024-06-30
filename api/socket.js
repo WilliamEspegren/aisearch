@@ -28,7 +28,6 @@ app.get('/socket.io/socket.io.js', (req, res) => {
 
 io.on('connection', (socket) => {
   socket.on('query', async (query) => {
-    console.log('query: ' + query);
     if (!query) {
       socket.emit('error', { error: 'Query parameter is required' });
       return;
@@ -47,7 +46,6 @@ io.on('connection', (socket) => {
       
       // Stream the response
       for await (const chunk of answerGenerator) {
-        console.log('chunk:', chunk);
         socket.emit('answer-chunk', chunk);
       }
     } catch (error) {

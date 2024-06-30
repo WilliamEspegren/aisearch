@@ -20,7 +20,7 @@
   <form id="search_form" class="mt-8">
     <input id="query" type="text" class="w-full p-4 text-2xl rounded-lg border-2" placeholder="Search for anything">
   </form>
-  <div id="results" class="mt-8 p-4 border-2 rounded-lg whitespace-pre"></div>
+  <div id="results" class="mt-8 p-4 border-2 rounded-lg whitespace-pre-wrap"></div>
   <script src="/socket.io/socket.io.js"></script>
   <script>
     const socket = io();
@@ -40,10 +40,8 @@
     });
 
     socket.on('search-results', (data) => {
-      console.log("search-results: ", data);
       results.innerHTML = '<h2>Search Results:</h2>';
       for (let result of data.content) {
-        console.log("result: ", result);
         results.innerHTML += `<h3>${result.title}</h3><p>${result.description}</p>`;
       }
       results.innerHTML += '<h2>Answer:</h2><p id="answer"></p>';
