@@ -5,9 +5,6 @@ const app = express();
 const spider = new Spider();
 
 app.get('/search', async (req, res) => {
-	// Start timer
-	const start = Date.now();
-
 	const query = req.query.q;
 
 	if (!req.query.q) {
@@ -19,9 +16,6 @@ app.get('/search', async (req, res) => {
 	}
 	try {
 		const response = await spider.search(query, options);
-		// Stop timer
-		const end = Date.now();
-		console.log(end - start);
 		return res.json(response);
 	} catch (error) {
 		console.log(error);
