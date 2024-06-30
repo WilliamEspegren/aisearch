@@ -3,6 +3,9 @@ import { createServer } from 'http';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { Server } from 'socket.io';
+import { spiderSearch } from './get_sources.js';
+import { groqResponse } from './groq.js';
+import { openaiResponse } from './openai.js';
 
 // Create __dirname equivalent for ES module
 const __filename = fileURLToPath(import.meta.url);
@@ -27,6 +30,19 @@ app.get('/socket.io/socket.io.js', (req, res) => {
 io.on('connection', (socket) => {
   socket.on('query', async (query) => {
     console.log('query: ' + query);
+    if (!query) {
+      return res.status(400).json({ error: 'Query parameter is required' });
+    }
+
+    try {
+      const searchResults = await spiderSearch(query);
+      console.log(searchResults);
+      // Emit the search results to the client
+      socket.emit('search-results', searchResults);
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({ error: "Internal server error" });
+    }
   });
 });
 
