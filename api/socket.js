@@ -1,7 +1,12 @@
-const express = require('express');
-const { createServer } = require('http');
-const { join } = require('path');
-const { Server } = require('socket.io');
+import express from 'express';
+import { createServer } from 'http';
+import { join, dirname } from 'path';
+import { fileURLToPath } from 'url';
+import { Server } from 'socket.io';
+
+// Create __dirname equivalent for ES module
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const app = express();
 const server = createServer(app);
