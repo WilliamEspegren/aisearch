@@ -15,7 +15,7 @@ app.get('/search', async (req, res) => {
 	}
 	const options = {
 		"fetch_page_content": false,
-		"num": 20,
+		"num": 10,
 	}
 	try {
 		const response = await spider.search(query, options);
