@@ -72,3 +72,20 @@ h3 {
     scale: 1;
   }
 }
+
+#powered_by {
+  transform: translateX(-370px);
+  display: inline-block;
+  animation: poweredBy 2s ease-in-out forwards;
+  animation-delay: 500ms;
+}
+
+@keyframes poweredBy {
+  0% {
+    transform: translate(-370px);
+  }
+
+  100% {
+    transform: translate(0px);
+  }
+}

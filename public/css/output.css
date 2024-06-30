@@ -567,6 +567,10 @@ video {
   display: block;
 }
 
+.inline-block {
+  display: inline-block;
+}
+
 .h-16 {
   height: 4rem;
 }
@@ -581,10 +585,6 @@ video {
 
 .overflow-hidden {
   overflow: hidden;
-}
-
-.whitespace-pre {
-  white-space: pre;
 }
 
 .whitespace-pre-wrap {
@@ -701,5 +701,22 @@ h3 {
     transform: translateY(0);
     opacity: 1;
     scale: 1;
+  }
+}
+
+#powered_by {
+  transform: translateX(-370px);
+  display: inline-block;
+  animation: poweredBy 2s ease-in-out forwards;
+  animation-delay: 500ms;
+}
+
+@keyframes poweredBy {
+  0% {
+    transform: translate(-370px);
+  }
+
+  100% {
+    transform: translate(0px);
   }
 }
