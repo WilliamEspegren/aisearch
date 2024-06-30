@@ -583,6 +583,10 @@ video {
   width: 100%;
 }
 
+.max-w-\[800px\] {
+  max-width: 800px;
+}
+
 .overflow-hidden {
   overflow: hidden;
 }
@@ -719,4 +723,9 @@ h3 {
   100% {
     transform: translate(0px);
   }
+}
+
+#query {
+  animation-delay: 2.5s;
+  opacity: 0;
 }

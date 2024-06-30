@@ -89,3 +89,8 @@ h3 {
     transform: translate(0px);
   }
 }
+
+#query {
+  animation-delay: 2.5s;
+  opacity: 0;
+}

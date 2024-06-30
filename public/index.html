@@ -21,10 +21,10 @@
       <span id="ai_agents" class="text-center block font-extrabold drop-down-text">AI agents</span>
     </span>
   </h1>
-  <form id="search_form" class="mt-8">
-    <input id="query" type="text" class="w-full p-4 text-2xl rounded-lg border-2" placeholder="Search for anything">
+  <form id="search_form" class="mt-8 overflow-hidden">
+    <input id="query" type="text" class="w-full p-4 text-2xl rounded-lg border-2 max-w-[800px] drop-down-text mx-auto" placeholder="Search for anything">
   </form>
-  <div id="results" class="mt-8 p-4 border-2 rounded-lg whitespace-pre-wrap"></div>
+  <div id="results" class="mt-8 p-4 border-2 rounded-lg whitespace-pre-wrap max-w-[800px] mx-auto"></div>
   <script src="/socket.io/socket.io.js"></script>
   <script>
     const socket = io();
