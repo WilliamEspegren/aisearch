@@ -1,28 +1,17 @@
-const express = require('express');
-const { Spider } = require('@spider-cloud/spider-client');
+import { Spider } from '@spider-cloud/spider-client';
 
-const app = express();
 const spider = new Spider();
 
-app.get('/search', async (req, res) => {
-	const query = req.query.q;
-
-	if (!req.query.q) {
-		return res.status(400).json({ error: 'Query parameter is required' });
-	}
+export async function spiderSearch(query) {
 	const options = {
 		"fetch_page_content": false,
 		"num": 10,
 	}
 	try {
 		const response = await spider.search(query, options);
-		return res.json(response);
+		return response;
 	} catch (error) {
 		console.log(error);
 		return res.status(500).json({ error: "Internal server error" });
 	}
-});
-
-app.listen(3000, () => {
-	console.log('Server is running on port 3000');
-});
+}
