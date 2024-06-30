@@ -6,6 +6,11 @@ body {
   color: #919191;
 }
 
+h3 {
+  color: black;
+  font-size: 20px;
+}
+
 #ai_agents {
   background-image: linear-gradient(60deg, #f8b500, #f54748, #c02425, #00a8b5, #4a4e69, #9a031e, #03506f, #b9375e);
   color: transparent;

@@ -3,11 +3,10 @@ import 'dotenv/config';
 
 const openai = new OpenAI();
 
-export async function openaiResponse(query) {
+export async function* openaiResponse(query) {
     const stream = await getOpenAiChatStream(query);
     for await (const chunk of stream) {
-        // Print the completion returned by the LLM.
-        console.log(chunk.choices[0]?.delta?.content || "");
+        yield chunk.choices[0]?.delta?.content || "";
     }
 }
 

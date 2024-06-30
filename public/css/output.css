@@ -583,6 +583,10 @@ video {
   overflow: hidden;
 }
 
+.whitespace-pre {
+  white-space: pre;
+}
+
 .rounded-lg {
   border-radius: 0.5rem;
 }
@@ -623,6 +627,11 @@ video {
 
 body {
   color: #919191;
+}
+
+h3 {
+  color: black;
+  font-size: 20px;
 }
 
 #ai_agents {

@@ -20,26 +20,43 @@
   <form id="search_form" class="mt-8">
     <input id="query" type="text" class="w-full p-4 text-2xl rounded-lg border-2" placeholder="Search for anything">
   </form>
-  <div id="results" class="mt-8 p-4 border-2 rounded-lg"></div>
+  <div id="results" class="mt-8 p-4 border-2 rounded-lg whitespace-pre"></div>
   <script src="/socket.io/socket.io.js"></script>
   <script>
     const socket = io();
-
     const form = document.getElementById('search_form');
     const query = document.getElementById('query');
     const results = document.getElementById('results');
+    let answerContent = '';
 
     form.addEventListener('submit', (e) => {
       e.preventDefault();
       results.innerHTML = '';  // Clear previous results
+      answerContent = '';  // Reset answer content
       if (query.value) {
         socket.emit('query', query.value);
-        query.value = '';
+        results.innerHTML = 'Searching...';
       }
     });
 
-    socket.on('response', (data) => {
-      results.innerHTML += data;  // Append new data to the results div
+    socket.on('search-results', (data) => {
+      console.log("search-results: ", data);
+      results.innerHTML = '<h2>Search Results:</h2>';
+      for (let result of data.content) {
+        console.log("result: ", result);
+        results.innerHTML += `<h3>${result.title}</h3><p>${result.description}</p>`;
+      }
+      results.innerHTML += '<h2>Answer:</h2><p id="answer"></p>';
+    });
+
+    socket.on('answer-chunk', (chunk) => {
+      answerContent += chunk;
+      document.getElementById('answer').innerHTML = answerContent;
+    });
+
+    socket.on('error', (error) => {
+      console.error('Error:', error);
+      results.innerHTML += `<p>Error: ${error.error}</p>`;
     });
   </script>
 </body>

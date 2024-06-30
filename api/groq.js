@@ -3,11 +3,10 @@ import 'dotenv/config'
 
 const groq = new Groq();
 
-export async function groqResponse(query) {
+export async function* groqResponse(query) {
     const stream = await getGroqChatStream(query);
     for await (const chunk of stream) {
-        // Print the completion returned by the LLM.
-        console.log(chunk.choices[0]?.delta?.content || "");
+        yield chunk.choices[0]?.delta?.content || "";
     }
 }
 
