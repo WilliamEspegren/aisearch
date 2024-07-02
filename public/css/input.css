@@ -99,6 +99,10 @@ h3 {
   opacity: 0;
 }
 
+#query:focus {
+  outline: none;
+}
+
 .source-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
