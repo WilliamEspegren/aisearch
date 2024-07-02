@@ -29,11 +29,10 @@
   </form>
   <div id="results"
     class="mt-8 p-4 border-2 rounded-lg whitespace-pre-wrap max-w-[800px] mx-auto opacity-0 duration-300">
-    <div id="sources-container" class="source-grid grid-cols-4"></div>
-    <div class="text-right mt-4">
-      <button id="show-more" class="px-4 py-2 bg-blue-500 text-white rounded hidden">Show More</button>
+    <div id="sources-container" class="source-grid grid-cols-4 -mt-[50px]"></div>
+    <div class="text-right -mt-[70px]">
+      <button id="show-more" class="px-4 py-1 text-xs text-gray-500 rounded hidden">+ sources</button>
     </div>
-    <h2 class="mt-8">Answer:</h2>
     <p id="answer"></p>
   </div>
 
@@ -67,13 +66,13 @@
         const sourceItem = document.createElement('div');
         console.log("THIS IS THE INDEX", index)
         sourceItem.className = `source-item ${index >= 6 ? 'hidden' : ''}`;
-        sourceItem.innerHTML = `<h3>${result.title}</h3><p>${result.description}</p>`;
+        sourceItem.innerHTML = `<a href="${result.url}" target="_blank"><h3 class="truncate">${result.title}</h3><p class="truncate" >${result.description}</p></div>`;
         sourcesContainer.appendChild(sourceItem);
       });
 
       if (data.content.length > 6) {
         showMoreButton.classList.remove('hidden');
-        showMoreButton.textContent = `Show ${data.content.length - 6} More`;
+        showMoreButton.textContent = `+${data.content.length - 6} sources`;
       }
 
       answer.innerHTML = '';
