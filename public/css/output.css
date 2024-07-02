@@ -856,7 +856,6 @@ h3 {
   overflow: hidden;
   position: relative;
   background-color: #ffffff;
-  /* Or whatever your background color is */
 }
 
 .source-item::after {
@@ -866,10 +865,8 @@ h3 {
   top: 0;
   bottom: 0;
   width: 50%;
-  /* Adjust this to control how much of the item is covered by the gradient */
   background: linear-gradient(to right, rgba(255, 255, 255, 0), #ffffff);
   pointer-events: none;
-  /* Ensures the overlay doesn't interfere with clicks */
 }
 
 .source-item h3 {
