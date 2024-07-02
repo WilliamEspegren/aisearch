@@ -1,12 +1,14 @@
 <!doctype html>
 <html>
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="/css/output.css" rel="stylesheet">
 </head>
+
 <body class="p-8">
-  <img src="/img/search_icon.svg" alt="search icon" id="search_hero" class="mx-auto w-32"/>
+  <img src="/img/search_icon.svg" alt="search icon" id="search_hero" class="mx-auto w-32" />
   <h1 class="text-6xl font-bold text-center">
     <span id="searh_hero_text" class="overflow-hidden inline-block">Search</span>
     <span id="hide_search">
@@ -14,7 +16,7 @@
     </span>
     <span class="overflow-hidden inline-block">
       <span id="powered_by">
-        powered by 
+        powered by
       </span>
     </span>
     <span class="overflow-hidden h-16 block">
@@ -22,38 +24,69 @@
     </span>
   </h1>
   <form id="search_form" class="mt-8 overflow-hidden">
-    <input id="query" type="text" class="w-full p-4 text-2xl rounded-lg border-2 max-w-[800px] drop-down-text mx-auto" placeholder="Search for anything">
+    <input id="query" type="text" class="w-full p-4 text-2xl rounded-lg border-2 max-w-[800px] drop-down-text mx-auto"
+      placeholder="Search for anything">
   </form>
-  <div id="results" class="mt-8 p-4 border-2 rounded-lg whitespace-pre-wrap max-w-[800px] mx-auto"></div>
+  <div id="results"
+    class="mt-8 p-4 border-2 rounded-lg whitespace-pre-wrap max-w-[800px] mx-auto opacity-0 duration-300">
+    <div id="sources-container" class="source-grid grid-cols-4"></div>
+    <div class="text-right mt-4">
+      <button id="show-more" class="px-4 py-2 bg-blue-500 text-white rounded hidden">Show More</button>
+    </div>
+    <h2 class="mt-8">Answer:</h2>
+    <p id="answer"></p>
+  </div>
+
   <script src="/socket.io/socket.io.js"></script>
   <script>
     const socket = io();
     const form = document.getElementById('search_form');
     const query = document.getElementById('query');
     const results = document.getElementById('results');
+    const sourcesContainer = document.getElementById('sources-container');
+    const showMoreButton = document.getElementById('show-more');
+    const answer = document.getElementById('answer');
+    answer.innerHTML = 'test';
     let answerContent = '';
 
     form.addEventListener('submit', (e) => {
       e.preventDefault();
-      results.innerHTML = '';  // Clear previous results
+      sourcesContainer.innerHTML = '';  // Clear previous results
       answerContent = '';  // Reset answer content
+      showMoreButton.classList.add('hidden');
       if (query.value) {
         socket.emit('query', query.value);
-        results.innerHTML = 'Searching...';
       }
     });
 
     socket.on('search-results', (data) => {
-      results.innerHTML = '<h2>Search Results:</h2>';
-      for (let result of data.content) {
-        results.innerHTML += `<h3>${result.title}</h3><p>${result.description}</p>`;
+      results.style.opacity = 1;
+      sourcesContainer.innerHTML = '';
+
+      data.content.forEach((result, index) => {
+        const sourceItem = document.createElement('div');
+        console.log("THIS IS THE INDEX", index)
+        sourceItem.className = `source-item ${index >= 6 ? 'hidden' : ''}`;
+        sourceItem.innerHTML = `<h3>${result.title}</h3><p>${result.description}</p>`;
+        sourcesContainer.appendChild(sourceItem);
+      });
+
+      if (data.content.length > 6) {
+        showMoreButton.classList.remove('hidden');
+        showMoreButton.textContent = `Show ${data.content.length - 6} More`;
       }
-      results.innerHTML += '<h2>Answer:</h2><p id="answer"></p>';
+
+      answer.innerHTML = '';
+    });
+
+    showMoreButton.addEventListener('click', () => {
+      document.querySelectorAll('.source-item').forEach(el => el.classList.remove('hidden'));
+      showMoreButton.classList.add('hidden');
     });
 
     socket.on('answer-chunk', (chunk) => {
       answerContent += chunk;
-      document.getElementById('answer').innerHTML = answerContent;
+      answer.innerHTML = answerContent;
     });
 
     socket.on('error', (error) => {
@@ -62,4 +95,5 @@
     });
   </script>
 </body>
+
 </html>

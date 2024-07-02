@@ -94,3 +94,13 @@ h3 {
   animation-delay: 2.5s;
   opacity: 0;
 }
+.source-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+.source-item {
+  border: 1px solid #e2e8f0;
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
