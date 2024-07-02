@@ -92,6 +92,19 @@
       console.error('Error:', error);
       results.innerHTML += `<p>Error: ${error.error}</p>`;
     });
+
+    // set cookie to know that the document already has been loaded once and therefore remove the animation
+    if (document.cookie.includes('loaded=true')) {
+      document.getElementById('powered_by').style.animation = 'none';
+      document.getElementById('powered_by').style.transform = 'none';
+      document.getElementById('ai_agents').style.animation = 'none';
+      document.getElementById('ai_agents').style.transform = 'none';
+      document.getElementById('ai_agents').style.opacity = '1';
+      document.getElementById('query').style.animation = 'none';
+      document.getElementById('query').style.transform = 'none';
+      document.getElementById('query').style.opacity = '1';
+    }
+    document.cookie = "loaded=true; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/";
   </script>
 </body>
 
