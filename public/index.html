@@ -27,6 +27,11 @@
     <input id="query" type="text" class="w-full p-4 text-2xl rounded-lg border-2 max-w-[800px] drop-down-text mx-auto"
       placeholder="Search for anything">
   </form>
+  <div id="state" class="flex-wrap flex gap-x-2 mt-7 absolute -translate-x-1/2 left-1/2 opacity-0 duration-300">
+    <div class="w-3 h-10 rounded-full bg-gray-500"></div>
+    <div class="w-3 h-10 rounded-full bg-gray-500"></div>
+    <div class="w-3 h-10 rounded-full bg-gray-500"></div>
+  </div>
   <div id="results"
     class="mt-8 p-4 border-2 rounded-lg whitespace-pre-wrap max-w-[800px] mx-auto opacity-0 duration-300">
     <div id="sources-container" class="source-grid grid-cols-4 -mt-[50px]"></div>
@@ -45,6 +50,7 @@
     const sourcesContainer = document.getElementById('sources-container');
     const showMoreButton = document.getElementById('show-more');
     const answer = document.getElementById('answer');
+    const state = document.getElementById('state');
     let answerContent = '';
 
     form.addEventListener('submit', (e) => {
@@ -52,6 +58,7 @@
       sourcesContainer.innerHTML = '';  // Clear previous results
       answerContent = '';  // Reset answer content
       showMoreButton.classList.add('hidden');
+      state.style.opacity = 1;
       if (query.value) {
         socket.emit('query', query.value);
       }
@@ -60,6 +67,7 @@
     socket.on('search-results', (data) => {
       results.style.opacity = 1;
       sourcesContainer.innerHTML = '';
+      state.style.opacity = 0;
 
       data.content.forEach((result, index) => {
         const sourceItem = document.createElement('div');
